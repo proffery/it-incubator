@@ -35,3 +35,6 @@ h2 {
 .established {
     font-style: italic;
 }
+hr {
+    height: 3px;
+}
