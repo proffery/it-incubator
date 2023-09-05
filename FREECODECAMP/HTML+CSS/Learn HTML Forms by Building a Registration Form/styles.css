@@ -45,4 +45,5 @@ input, textarea, select {
     width: unset;
     margin: 0;
     margin-right: .5em;
+    vertical-align: middle;
 }
