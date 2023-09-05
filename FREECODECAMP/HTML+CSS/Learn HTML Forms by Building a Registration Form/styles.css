@@ -47,3 +47,8 @@ input, textarea, select {
     margin-right: .5em;
     vertical-align: middle;
 }
+
+input, textarea {
+    background-color: #0a0a23;
+    border: 1px solid #0a0a23;
+}
