@@ -21,6 +21,8 @@
     height: 200px;
     background-color: #8f0401;
     margin: auto;
+    margin-top: 0;
+    margin-bottom: 20px;
 }
 .three {
     width: 91%;
