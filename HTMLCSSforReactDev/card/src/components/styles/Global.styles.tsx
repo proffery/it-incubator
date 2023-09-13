@@ -1,4 +1,5 @@
 import { createGlobalStyle } from "styled-components";
+import { theme } from "./Theme.styled";
 
 export const GlobalStyles = createGlobalStyle`
     *,
@@ -13,7 +14,7 @@ export const GlobalStyles = createGlobalStyle`
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #f0f3f7;
+        background-color: ${theme.colors.background};
         margin: 0;
         height: 100vh;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
