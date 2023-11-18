@@ -43,7 +43,7 @@
             isMarried: false,
             scores: 105
         },
-    ];   
+    ];
     const user = {
         name: "Bob",
         age: 23,
@@ -77,47 +77,56 @@
         ]
     }
     // NB!!! Все преобразования выполняем иммьютабельно, если не сказано иное
-    
+
     //1. Создайте полную (глубокую) копию объекта user
-    let deepCopyUser 
-    
+    let deepCopyUser = { ...user, friends: [...user.friends] }
+
+    console.log(deepCopyUser);
     //2. Создайте полную (глубокую) массива students
-    let deepCopyStudents 
-    
+    let deepCopyStudents = students.map(student => ({ ...student }))
+
+    console.log(deepCopyStudents);
     //3. Создайте полную (глубокую) копию объекта superUser
-    let deepCopySuperUser 
-    
+    let deepCopySuperUser = { ...superUser, friends: superUser.friends.map(friend => ({ ...friend })) }
+
+    console.log(deepCopySuperUser);
     //4. Отсортируйте students по успеваемости (лучший идёт первым)
-    let sortedByScores 
+    let sortedByScores = students.toSorted((a, b) => b.scores - a.scores)
     console.log(sortedByScores);
-    
+
     //5. Сформируйте массив студентов, у которых 100 и более баллов 
-    let  bestStudents 
+    let bestStudents = students.filter(student => student.scores >= 100)
     console.log(bestStudents)
-    
+
     //6. Сформируйте массив имён студентов 
-    let studentsNames 
+    let studentsNames = students.map(student => student.name)
     console.log(studentsNames)
-    
+
     //7. Добавьте всем студентам свойство "isStudent" со значением true 
-    let trueStudents 
+    let trueStudents = students.map(student => ({ ...student, isStudent: true }))
     console.log(trueStudents)
-    
+
     //8. Nick женился. Выполните соответствующие преобразование массива
     // students 
-    let studentsWithMarriedNick 
+    let studentsWithMarriedNick = students.map(student => student.name === 'Nick' ? { ...student, isMarried: true } : student)
     console.log(studentsWithMarriedNick)
-    
+
     // Внесите  следующие изменения в объект superUser:
     // NB!!! Все преобразования выполняем иммьютабельно, если не сказано иное
-    
+
     //9.Удалите объект с id=1 из массива  friends
-    let superUserCorrect1 
-    
+    let superUserCorrect1 = { ...superUser, friends: superUser.friends.filter(friend => friend.id !== 1) }
+    console.log(superUserCorrect1)
     //10. поменяйте объекту с id=2 из массива  friends значение св-ва name на
     // "Donald"
-    let superUserCorrect2 
-    
+    let superUserCorrect2 = {
+        ...superUser, friends: superUser.friends.map(friend => friend.id === 2
+            ? { ...friend, name: 'Donald' }
+            : friend
+        )
+    }
+    console.log(superUserCorrect2)
+
     //11. добавьте в список друзей нового друга
     const newFriend = {
         id: 5,
@@ -126,44 +135,69 @@
         isMarried: false,
         scores: 99
     }
-    let superUserCorrect3 
-    
+    let superUserCorrect3 = { ...superUser, friends: [...superUser.friends, newFriend] }
+    console.log(superUserCorrect3)
     // И поднимаем руку!!!!
-    
+
     //12. Найдите студента с самым высоким баллом не используя методы массивов и
     // Math.max()*
-    let bestStudent;
+    let bestStudent = (() => {
+        let max = students[0].scores
+        for (let i = 0; i < students.length; i++) {
+            if (students[i].scores > max) {
+                max = students[i].scores
+            }
+        }
+        return max
+    })();
     console.log(bestStudent)
-    
+
     //13. Найдите сумму баллов всех студентов (reduce)*
-    let scoresSum;
+    let scoresSum = students.reduce((acc, student) => acc + student.scores, 0);
     console.log(scoresSum)
-    
+
     // 14. Д.З.:
     // Напишите функцию addFriends, которая принимает параметром массив students
     // и добавляет в каждому студенту свойство "friends",
     // значением которого является массив имён всех остальных студентов из массива students,
     // за исключением собственного имени студента. Т.е. в друзьях у Боба Боба быть не должно.
     const addFriends = (students) => {
-       //..............................
+        const friends = students.map(student => student.name)
+        return students.map(student => ({ ...student, friends: friends.filter(friend => friend !== student.name) }))
     }
     console.log(addFriends(students));
-    
+
     // 15. Д.З.: Напишите функцию getBestStudents, которая принимает параметром
     // массив students  и количество лучших студентов, которое надо получить в
     // новом массиве. Если второго параметра нет, то по умолчанию возвращает лучшего студента
     // getBestStudents(students) => {name: "Nick", age: 20, isMarried: false, scores: 120}
     // getBestStudents(students, 3) => [{...}, {...}, {...}]
     // getBestStudents(students, 10) => [{}, {}, ...., {}, null, null, null, null ]
-    
+
     function getBestStudents(studentsArray, quantity = 0) {
-       
+        // if (quantity === 0) {
+        //     return studentsArray.toSorted((a, b) => b.scores - a.scores)[0]
+        // }
+        // else {
+        return !quantity
+            ? studentsArray.toSorted((a, b) => b.scores - a.scores)[0]
+            : quantity <= studentsArray.length
+                ? studentsArray.toSorted((a, b) => b.scores - a.scores)
+                    .filter((student, index) => index < quantity)
+                : (() => {
+                    let returnedArray = []
+                    for (let i = 0; i < quantity; i++) {
+                        if (i < quantity - i ) {
+                            returnedArray.push(studentsArray[i])
+                            returnedArray.sort((a, b) => b.scores - a.scores)
+                        }
+                        else returnedArray.push(null)
+                    }
+                    return returnedArray
+                })()
+
     }
+    console.log(getBestStudents(students));
+    console.log(getBestStudents(students, 3));
+    console.log(getBestStudents(students, 10));
 </script>
-
-
-
-
-
-
-
