@@ -7,10 +7,10 @@ import { ButtonAppBar } from './ButtonAppBar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
 import styled from 'styled-components';
 import { addEmtyTaskListAC, addTaskAC, changeTaskAC, changeTaskStatusAC, removeAllTasksAC, removeTaskAC, tasksReducer } from './reducers/tasksReducer';
 import { addTodolistAC, changeTodoListTitleAC, removeTodolistAC, setTodolistFilterAC, todolistReducer } from './reducers/todolistReducer';
-import Stack from '@mui/material/Stack';
 
 export type TaskFilterValueType = 'all' | 'active' | 'completed'
 
